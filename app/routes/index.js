@@ -14,6 +14,7 @@ router.get('/token', (req, res) => {
     res.json(token)
 })
 
+router.get('/', (req, res) => {res.send({message: "Success"})})
 
 // Get user by account number or identity_number with query
 router.get('/user', authenticateToken, userController.getUser)
