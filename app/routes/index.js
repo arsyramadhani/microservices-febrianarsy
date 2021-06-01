@@ -1,19 +1,33 @@
-const router = require('express').Router(); 
+const router = require('express').Router();
 const userController = require('../controller/UserController');
-const User = require('../model/users'); 
-const redis = require('../config/redis');
+const {
+    generateToken,
+    authenticateToken
+} = require('../service/jwt');
+
+
+// Generate Token
+router.get('/token', (req, res) => {
+    const token = generateToken({
+        account_number: req.body.account_number
+    })
+    res.json(token)
+})
+
 
 // Get user by account number or identity_number with query
-router.get('/user', userController.getUser)
+router.get('/user', authenticateToken, userController.getUser)
 
 // Post user to database
-router.post('/user', userController.createUser)
+router.post('/user', authenticateToken, userController.createUser)
 
 // Edit User
-router.put('/user/:account_number', userController.modifyUser)
+router.put('/user/:account_number', authenticateToken, userController.modifyUser)
 
 // Delete User
-router.delete('/user/:account_number', userController.deleteUser)
+router.delete('/user/:account_number', authenticateToken, userController.deleteUser)
+
+
 
 
 module.exports = router;
