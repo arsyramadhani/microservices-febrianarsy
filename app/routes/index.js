@@ -1,43 +1,18 @@
 const router = require('express').Router();
 const User = require('../model/users');
+const userController = require('../controller/UserController');
 
-router.get('/tes', (req, res) => {
-    res.send("Allright")
-})
+// Get user by account number or identity_number with query
+router.get('/user', userController.getUser)
 
-router.get('/user', async (req, res) => {
-    res.status(400).send({
-        message: "Allright ok sdo dsof "
-    })
-})
+// Post user to database
+router.post('/user', userController.createUser)
 
-// Crreate New User
-router.post('/user', async (req, res) => {
-    // res.send("Allright")
-    const {username,
-        account_number,
-        email_address,
-        identitynumber} = 
-    req.body
+// Edit User
+router.put('/user/:account_number', userController.modifyUser)
 
-    const user = new User({
-    userName: username,
-    accountNumber: account_number,
-    emailAddress: email_address,
-    identityumber: identitynumber,
-    })
-    try {
-        const newUser = await user.save();
-        res.status(201).send({
-            message: "User Created",
-            details: newUser
-        })
-    } catch (error) {
-        // console.log(error)
-        
-    }
-})
-
+// Delete User
+router.delete('/user/:account_number', userController.deleteUser)
 
 
 module.exports = router;
