@@ -1,7 +1,7 @@
-let express = require('express');
-let app = express()
-let cors = require('cors');
-let morgan = require('morgan')
+const express = require('express');
+const app = express()
+const cors = require('cors');
+const morgan = require('morgan') 
 
 require('dotenv').config();
 app.use(express.urlencoded({extended: false}))
@@ -10,6 +10,7 @@ app.use(cors())
 
 app.use(morgan('combined'))
 require('./config/db');
+require('./config/redis'); 
 
 app.use('/', require('./routes'))
 

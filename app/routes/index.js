@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const User = require('../model/users');
+const router = require('express').Router(); 
 const userController = require('../controller/UserController');
+const User = require('../model/users'); 
+const redis = require('../config/redis');
 
 // Get user by account number or identity_number with query
 router.get('/user', userController.getUser)
